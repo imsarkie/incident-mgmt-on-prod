@@ -14,6 +14,11 @@ export const colors = {
   major: "#F5B942",
   critical: "#F25C5C",
 
+  // Kubernetes incident severities (critical/high/medium) — distinct from the fictional
+  // simulator's minor/major/critical above.
+  high: "#F5B942",
+  medium: "#4C8DFF",
+
   resolved: "#31C48D",
   monitoring: "#F5B942",
   active: "#F25C5C",

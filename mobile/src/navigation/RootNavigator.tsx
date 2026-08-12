@@ -2,10 +2,9 @@ import { DarkTheme, NavigationContainer, type Theme } from "@react-navigation/na
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import { ServicesScreen } from "../screens/ServicesScreen";
-import { ServiceDetailScreen } from "../screens/ServiceDetailScreen";
-import { IncidentsScreen } from "../screens/IncidentsScreen";
-import { IncidentDetailScreen } from "../screens/IncidentDetailScreen";
+import { PodsScreen } from "../screens/PodsScreen";
+import { PodDetailScreen } from "../screens/PodDetailScreen";
+import { PodIncidentsScreen } from "../screens/PodIncidentsScreen";
 import type { RootStackParamList, TabParamList } from "./types";
 import { colors } from "../constants/theme";
 
@@ -36,9 +35,9 @@ function Tabs() {
     >
       <Tab.Screen
         name="Services"
-        component={ServicesScreen}
+        component={PodsScreen}
         options={{
-          title: "Services",
+          title: "Pods",
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons name={focused ? "grid" : "grid-outline"} color={color} size={size} />
           ),
@@ -46,7 +45,7 @@ function Tabs() {
       />
       <Tab.Screen
         name="Incidents"
-        component={IncidentsScreen}
+        component={PodIncidentsScreen}
         options={{
           title: "Incidents",
           tabBarIcon: ({ color, size, focused }) => (
@@ -64,11 +63,10 @@ export function RootNavigator() {
       <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: colors.surface }, headerTintColor: colors.text }}>
         <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
         <Stack.Screen
-          name="ServiceDetail"
-          component={ServiceDetailScreen}
-          options={({ route }) => ({ title: route.params.serviceName ?? "Service" })}
+          name="PodDetail"
+          component={PodDetailScreen}
+          options={({ route }) => ({ title: route.params.name })}
         />
-        <Stack.Screen name="IncidentDetail" component={IncidentDetailScreen} options={{ title: "Incident" }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

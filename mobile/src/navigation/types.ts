@@ -11,6 +11,7 @@ export type RootStackParamList = {
   Tabs: NavigatorScreenParams<TabParamList>;
   ServiceDetail: { serviceId: string; serviceName?: string };
   IncidentDetail: { incidentId: string };
+  PodDetail: { namespace: string; name: string };
 };
 
 export type TabScreenProps<T extends keyof TabParamList> = CompositeScreenProps<

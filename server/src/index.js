@@ -12,6 +12,8 @@ import {
   createIncident,
   updateIncidentStatus,
 } from "./data.js";
+import { k8sRouter } from "./k8s/routes.js";
+import { startK8sRealtime } from "./k8s/realtime.js";
 
 const PORT = process.env.PORT ?? 4000;
 
@@ -45,6 +47,10 @@ app.get("/api/incidents/:id/timeline", (req, res) => {
   if (!timeline) return res.status(404).json({ error: "Incident not found" });
   res.json(timeline);
 });
+
+// Real Kubernetes production monitoring — additive, alongside the fictional simulator
+// above. See docs/40-kubernetes-monitoring.md / docs/41-kubernetes-api-contract.md.
+app.use(k8sRouter);
 
 const server = createServer(app);
 const wss = new WebSocketServer({ server, path: "/ws" });
@@ -91,6 +97,11 @@ setInterval(() => {
     }
   }
 }, 8000);
+
+// Kubernetes side of realtime: pod watch (near-instant) + a metrics poll (CPU/memory
+// can't be watched). Safe to start even before the SSH tunnel/proxy is up — it just
+// retries quietly until `http://localhost:8001` becomes reachable.
+startK8sRealtime(broadcast);
 
 server.listen(PORT, () => {
   console.log(`pulse-server listening on http://localhost:${PORT} (ws at /ws)`);

@@ -20,3 +20,15 @@ export async function apiFetch<T>(path: string, options?: RequestInit): Promise<
 
   return response.json() as Promise<T>;
 }
+
+/** Same contract as apiFetch, but for endpoints that respond with plain text (e.g. pod logs). */
+export async function apiFetchText(path: string, options?: RequestInit): Promise<string> {
+  const response = await fetch(`${API_BASE_URL}${path}`, options);
+
+  if (!response.ok) {
+    const body = await response.json().catch(() => null);
+    throw new ApiError(body?.error ?? `Request failed (${response.status})`, response.status);
+  }
+
+  return response.text();
+}
