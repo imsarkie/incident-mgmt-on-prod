@@ -57,6 +57,8 @@ codebase.
 **Every Kubernetes API call is a read (`GET`).** There is no code path anywhere in this
 repository that can create, patch, delete, scale, or exec into anything in the cluster.
 
+![SSH tunnel + kubectl proxy setup](screenshots/ssh-tunnel-setup.png)
+
 ## Tech stack
 
 - **Mobile**: React Native, Expo (SDK 57), TypeScript, React Navigation, native
